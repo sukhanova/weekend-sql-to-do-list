@@ -1,24 +1,23 @@
-$(document).ready(readyNow);
+$(document).ready(onReady);
 
-function readyNow() {
+function onReady() {
   $("#submitBtn").on("click", addNewTask);
+  
 }
 
-function addNewTask(event) {
+function addNewTask(event) { 
     event.preventDefault();
-    console.log("#submitBtn clicked!");
-    const objectToSend = {
-        task: $('#newTaskIn').val(),
+    let objectToSend = {
+        task: $('#newTaskIn').val()
     }
-    console.log('in addNewTask:', objectToSend);
+    console.log('in addNewTask', objectToSend);
     $.ajax({
-        method: 'POST',
+        type: 'POST',
         url: '/task',
         data: objectToSend
     }).then(function (response) { 
-        console.log(response);
+        console.log('back from POST:', response);
     }).catch(function (error) { 
-        alert(`error adding task`);
-        console.log(error);
+        alert('error adding item: ', error);
     })
 }
