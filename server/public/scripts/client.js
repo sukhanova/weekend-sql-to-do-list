@@ -1,12 +1,13 @@
 $(document).ready(onReady);
 
 function onReady() {
+    getTasks();
   $("#submitBtn").on("click", addNewTask);
   
 }
 
 function addNewTask(event) { 
-    event.preventDefault();
+    event.preventDefault(); // stop page refresh
     let objectToSend = {
         task: $('#newTaskIn').val()
     }
@@ -17,7 +18,19 @@ function addNewTask(event) {
         data: objectToSend
     }).then(function (response) { 
         console.log('back from POST:', response);
+        getTasks();
     }).catch(function (error) { 
         alert('error adding item: ', error);
+    })
+}
+
+function getTasks() { 
+    $.ajax({
+        type: 'GET',
+        url: '/tasks'
+    }).then((response) => { 
+        console.log(response);
+    }).catch(function (error){ 
+        alert('error getting items', error);
     })
 }

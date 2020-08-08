@@ -20,12 +20,23 @@ app.post('/task', (req, res) => {
     pool.query(queryText, id).then((result) => { 
         res.sendStatus(201);
     }).catch((error) => { 
-        console.log('ERROR with INSERT new task', error);
+        console.log('ERROR with INSERT:', error);
         res.sendStatus(500);
     })
 })
 
-
+// get all tasks from db
+app.get('/tasks', (req, res) => { 
+    console.log('in /tasks GET');
+    const queryText = `SELECT * from "tasklist" 
+    ORDER BY "id";`;
+    pool.query(queryText).then((results) => { 
+        res.send(results.rows);
+    }).catch((error) => { 
+        console.log('ERROR with GET:', error);
+        res.sendStatus(500);
+    })
+})
 // spin up server
 app.listen(PORT, () => {
   console.log('server up on:', PORT);
