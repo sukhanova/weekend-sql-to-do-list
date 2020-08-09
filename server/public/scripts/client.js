@@ -53,7 +53,7 @@ function appendTasks(response) {
     if (oneTask.complete === "YES") {
       $("#taskToDisplay").append(
         `<tr>
-                    <td>${oneTask.task}</td>
+                    <td align="center"><h3>${oneTask.task}</h3></td>
                     <td>${oneTask.complete}</td>
                     <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
                     <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
@@ -118,3 +118,4 @@ function markComplete() {
         console.log('error in updating task', error);
     })
 }
+
