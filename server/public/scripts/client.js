@@ -48,7 +48,7 @@ function getTasks() {
                   `<tr>
                         <td align="center"><h3>${oneTask.task}</h3></td>
                         <td>${oneTask.complete}</td>
-                        <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
+                        <td><button class="completedBtn" data-id='${oneTask.id}'>Completed</button></td>
                         <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
                     </tr>`
                 );
