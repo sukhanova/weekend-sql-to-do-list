@@ -13,23 +13,25 @@ function addNewTask(event) {
   let objectToSend = {
     task: $("#newTaskIn").val(),
   };
-  if (objectToSend.task === "") {
+  if ($("#newTaskIn").val() === "") {
     swal("Please enter new task");
-  }
-  console.log("in addNewTask", objectToSend);
-  $.ajax({
-    type: "POST",
-    url: "/task",
-    data: objectToSend,
-  })
-    .then(function (response) {
+  } else {
+    console.log("in addNewTask", objectToSend);
+    $.ajax({
+      type: "POST",
+      url: "/task",
+      data: objectToSend,
+    })
+      .then(function (response) {
         console.log("back from POST:", response);
         getTasks();
-        $('#newTaskIn').val('');
-    })
-    .catch(function (error) {
-      alert("error adding item: ", error);
-    });
+        $("#newTaskIn").val("");
+      })
+      .catch(function (error) {
+        alert("error adding item: ", error);
+      });
+  }
+  
 }
 
 function getTasks() {
@@ -55,7 +57,7 @@ function getTasks() {
             } else {
                 $("#taskToDisplay").append(
                   `<tr>
-                        <td>${oneTask.task}</td>
+                        <td><strong><em>${oneTask.task}</strong></em></td>
                         <td>TODO</td>
                         <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
                         <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
