@@ -58,7 +58,7 @@ function getTasks() {
                 $("#taskToDisplay").append(
                   `<tr>
                         <td><strong><em>${oneTask.task}</strong></em></td>
-                        <td>TODO</td>
+                        <td><em><strong>TODO</strong></em></td>
                         <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
                         <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
                     </tr>`
