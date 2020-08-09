@@ -15,7 +15,7 @@ This simple application allows entry and tracking of tasks.  You may enter a tas
  ```
 
 ## Technologies Used
-- Javascript
+- JavaScript
 - jQuery
 - Node.js
 - Postgres
