@@ -37,6 +37,21 @@ app.get('/tasks', (req, res) => {
         res.sendStatus(500);
     })
 })
+
+// delete task from db
+app.delete('/tasks/:id', (req, res) => { 
+    console.log('in tasks/delete', req.params.id);
+    const value = [req.params.id];
+    const queryText = `DELETE FROM "tasklist" WHERE id=$1;`;
+    pool.query(queryText, value).then((response) => { 
+        res.sendStatus(200);
+    }).catch((error) => { 
+        console.log('ERROR with DELETE:', error);
+        res.sendStatus(500);
+    })
+})
+
+
 // spin up server
 app.listen(PORT, () => {
   console.log('server up on:', PORT);
