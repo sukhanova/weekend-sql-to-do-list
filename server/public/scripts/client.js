@@ -23,7 +23,8 @@ function addNewTask(event) {
     data: objectToSend,
   })
     .then(function (response) {
-      console.log("back from POST:", response);
+        console.log("back from POST:", response);
+        getTasks();
     })
     .catch(function (error) {
       alert("error adding item: ", error);
