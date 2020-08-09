@@ -2,7 +2,7 @@ $(document).ready(onReady);
 
 function onReady() {
     getTasks();
-  $("#submitBtn").on("click", addNewTask);
+    $("#submitBtn").on("click", addNewTask);
     $("#taskToDisplay").on("click", ".deleteBtn", deleteTask);
     $("#taskToDisplay").on("click", ".editBtn", markComplete);
     
@@ -32,46 +32,43 @@ function addNewTask(event) {
 }
 
 function getTasks() {
+  $("#taskToDisplay").empty();
   $.ajax({
     type: "GET",
     url: "/tasks",
   })
     .then((response) => {
       console.log(response);
-      appendTasks(response);
+      //appendTasks(response);
+        for (let i = 0; i < response.length; i++) {
+            let oneTask = response[i];
+            console.log(oneTask);
+            if (oneTask.complete === "YES") {
+                $("#taskToDisplay").append(
+                  `<tr>
+                        <td align="center"><h3>${oneTask.task}</h3></td>
+                        <td>${oneTask.complete}</td>
+                        <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
+                        <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
+                    </tr>`
+                );
+            } else {
+                $("#taskToDisplay").append(
+                  `<tr>
+                        <td>${oneTask.task}</td>
+                        <td>${oneTask.complete}</td>
+                        <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
+                        <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
+                    </tr>`
+                ); }
+
+        } 
     })
     .catch(function (error) {
       alert("error getting items", error);
     });
 }
 
-// append tasks to dom
-function appendTasks(response) {
-  $("#taskToDisplay").empty();
-  for (let i = 0; i < response.length; i++) {
-    let oneTask = response[i];
-    console.log(oneTask);
-    if (oneTask.complete === "YES") {
-      $("#taskToDisplay").append(
-        `<tr>
-                    <td align="center"><h3>${oneTask.task}</h3></td>
-                    <td>${oneTask.complete}</td>
-                    <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
-                    <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
-                </tr>`
-      );
-    } else {
-      $("#taskToDisplay").append(
-        `<tr>
-                    <td>${oneTask.task}</td>
-                    <td>${oneTask.complete}</td>
-                    <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
-                    <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>   
-                </tr>`
-      );
-    }
-  }
-}
 
 function deleteTask() {
     console.log("Delete button clicked!");
@@ -92,7 +89,7 @@ function deleteTask() {
                 method: "DELETE",
                 url: `/tasks/${idToDelete}`
             }).then(function (response) {
-                appendTasks();
+                getTasks();
             }).catch(function (error) {
                 console.log('error deleting task', error)
             })
@@ -114,7 +111,7 @@ function markComplete() {
         url: `/tasks/${idToUpdate}`,
         data: { complete: !taskStatus }
     }).then(function () { 
-        appendTasks();
+        getTasks();
     }).catch(function (error) { 
         console.log('error in updating task', error);
     })
