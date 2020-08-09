@@ -11,6 +11,9 @@ function addNewTask(event) {
     let objectToSend = {
         task: $('#newTaskIn').val()
     }
+    if (objectToSend.task === '') { 
+        swal('Please enter new task');
+    }
     console.log('in addNewTask', objectToSend);
     $.ajax({
         type: 'POST',
@@ -18,7 +21,6 @@ function addNewTask(event) {
         data: objectToSend
     }).then(function (response) { 
         console.log('back from POST:', response);
-        getTasks();
     }).catch(function (error) { 
         alert('error adding item: ', error);
     })
@@ -28,9 +30,39 @@ function getTasks() {
     $.ajax({
         type: 'GET',
         url: '/tasks'
-    }).then((response) => { 
+    }).then((response) => {
         console.log(response);
-    }).catch(function (error){ 
+        appendTasks(response);
+    }).catch(function (error) {
         alert('error getting items', error);
-    })
+    });
 }
+
+// append tasks to dom
+function appendTasks(response) {
+    $('#taskToDisplay').empty();
+    for (let i = 0; i < response.length; i++) {
+        let oneTask = response[i];
+        console.log(oneTask)
+        if (oneTask.complete === "YES") {
+            $("#taskToDisplay").append(
+              `<tr>
+                    <td>${oneTask.task}</td>
+                    <td>${oneTask.complete}</td>
+                    <td><button data-id='${oneTask.id}'>Edit</button></td>
+                    <td><button data-id='${oneTask.id}'>Delete</button></td>
+                </tr>`
+            );
+        } else {
+            $("#taskToDisplay").append(
+              `<tr>
+                    <td>${oneTask.task}</td>
+                    <td>${oneTask.complete}</td>
+                    <td><button data-id='${oneTask.id}'>Edit</button></td>
+                    <td><button data-id='${oneTask.id}'>Delete</button></td>   
+                </tr>`
+            );
+         }
+
+    }
+ }

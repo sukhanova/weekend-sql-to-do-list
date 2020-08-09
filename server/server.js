@@ -29,7 +29,7 @@ app.post('/task', (req, res) => {
 app.get('/tasks', (req, res) => { 
     console.log('in /tasks GET');
     const queryText = `SELECT * from "tasklist" 
-    ORDER BY "id";`;
+    ORDER BY lower(task);`;
     pool.query(queryText).then((results) => { 
         res.send(results.rows);
     }).catch((error) => { 
