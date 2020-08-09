@@ -25,6 +25,7 @@ function addNewTask(event) {
     .then(function (response) {
         console.log("back from POST:", response);
         getTasks();
+        $('#newTaskIn').val('');
     })
     .catch(function (error) {
       alert("error adding item: ", error);
@@ -39,7 +40,6 @@ function getTasks() {
   })
     .then((response) => {
       console.log(response);
-      //appendTasks(response);
         for (let i = 0; i < response.length; i++) {
             let oneTask = response[i];
             console.log(oneTask);
