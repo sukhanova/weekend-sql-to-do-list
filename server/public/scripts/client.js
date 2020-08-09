@@ -48,20 +48,20 @@ function getTasks() {
             if (oneTask.complete === "YES") {
                 $("#taskToDisplay").append(
                   `<tr>
-                        <td align="center"><h3>${oneTask.task}</h3></td>
-                        <td>DONE</td>
-                        <td><button class="completedBtn" data-id='${oneTask.id}'>Completed</button></td>
-                        <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
+                    <td align="center"><h3>${oneTask.task}</h3></td>
+                    <td>DONE</td>
+                    <td><button class="completedBtn" data-id='${oneTask.id}'>Completed</button></td>
+                    <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
                     </tr>`
                 );
             } else {
                 $("#taskToDisplay").append(
                   `<tr>
-                        <td><strong><em>${oneTask.task}</strong></em></td>
-                        <td><em><strong>TODO</strong></em></td>
-                        <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
-                        <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
-                    </tr>`
+                    <td><strong><em>${oneTask.task}</strong></em></td>
+                    <td><em><strong>TODO</strong></em></td>
+                    <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
+                    <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
+                  </tr>`
                 ); }
 
         } 
