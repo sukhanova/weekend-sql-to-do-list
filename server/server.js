@@ -51,8 +51,21 @@ app.delete('/tasks/:id', (req, res) => {
     })
 })
 
+app.put('/tasks/:id', (req, res) => {
+    console.log('in tasks/put', req.params.id);
+    const value = [req.params.id];
+    const queryText = `UPDATE "tasklist" SET "complete" = 'YES'
+    WHERE "id" = $1;`;
+    pool.query(queryText, value).then((response) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('ERROR with UPDATE:', error);
+        res.sendStatus(500);
+    })
+})
+
 
 // spin up server
 app.listen(PORT, () => {
   console.log('server up on:', PORT);
-});
+})

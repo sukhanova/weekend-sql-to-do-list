@@ -1,9 +1,11 @@
 $(document).ready(onReady);
 
 function onReady() {
-  getTasks();
+    getTasks();
   $("#submitBtn").on("click", addNewTask);
-  $("#taskToDisplay").on("click", ".deleteBtn", deleteTask);
+    $("#taskToDisplay").on("click", ".deleteBtn", deleteTask);
+    $("#taskToDisplay").on("click", ".editBtn", markComplete);
+    
 }
 
 function addNewTask(event) {
@@ -53,7 +55,7 @@ function appendTasks(response) {
         `<tr>
                     <td>${oneTask.task}</td>
                     <td>${oneTask.complete}</td>
-                    <td><button data-id='${oneTask.id}'>Edit</button></td>
+                    <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
                     <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>
                 </tr>`
       );
@@ -62,7 +64,7 @@ function appendTasks(response) {
         `<tr>
                     <td>${oneTask.task}</td>
                     <td>${oneTask.complete}</td>
-                    <td><button data-id='${oneTask.id}'>Edit</button></td>
+                    <td><button class="editBtn" data-id='${oneTask.id}'>Complete</button></td>
                     <td><button class="deleteBtn" data-id='${oneTask.id}'>Delete</button></td>   
                 </tr>`
       );
@@ -97,4 +99,22 @@ function deleteTask() {
             swal("Your task is safe");
         }
     }))
+}
+
+function markComplete() { 
+    console.log('EDIT button clicked!')
+    let idToUpdate = $(this).data("id");
+    let taskStatus = {
+        complete: 'YES'
+    }
+    console.log(idToUpdate);
+    $.ajax({
+      method: "PUT",
+        url: `/tasks/${idToUpdate}`,
+        data: { complete: !taskStatus }
+    }).then(function () { 
+        appendTasks();
+    }).catch(function (error) { 
+        console.log('error in updating task', error);
+    })
 }
