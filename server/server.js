@@ -9,7 +9,7 @@ app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // globals
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // routes
 // post task
@@ -67,5 +67,5 @@ app.put('/tasks/:id', (req, res) => {
 
 // spin up server
 app.listen(PORT, () => {
-  console.log('server up on:', PORT);
-})
+  console.log("server up on:", PORT);
+});
